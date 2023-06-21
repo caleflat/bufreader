@@ -1,15 +1,16 @@
 #ifndef BUFREADER_BUFREADER_H
 #define BUFREADER_BUFREADER_H
 
+#include <stddef.h>
 #include <stdint.h>
 #include <string.h>
 
 typedef struct {
-    int fd;
-    int buf_size;
-    int buf_pos;
-    ssize_t buf_len;
-    char *buf;
+  size_t fd;
+  size_t buf_size;
+  size_t buf_pos;
+  ssize_t buf_len;
+  char *buf;
 } BufReader;
 
 /**
@@ -20,7 +21,7 @@ typedef struct {
  *
  * @return
  */
-BufReader *new_bufreader(int fd, int buf_size);
+BufReader *new_bufreader(size_t fd, size_t buf_size);
 
 /**
  * @brief Free a BufReader object
@@ -38,7 +39,7 @@ void free_bufreader(BufReader *br);
  *
  * @return the number of bytes read
  */
-int bufreader_read(BufReader *br, char *buf, int buf_size);
+size_t bufreader_read(BufReader *br, char *buf, size_t buf_size);
 
 /**
  * @brief Read a line from a BufReader object
@@ -49,7 +50,7 @@ int bufreader_read(BufReader *br, char *buf, int buf_size);
  *
  * @return the number of bytes read
  */
-int bufreader_readline(BufReader *br, char *buf, int buf_size);
+size_t bufreader_readline(BufReader *br, char *buf, size_t buf_size);
 
 /**
  * @brief Read until a delimiter from a BufReader object
@@ -61,7 +62,8 @@ int bufreader_readline(BufReader *br, char *buf, int buf_size);
  *
  * @return the number of bytes read
  */
-int bufreader_readuntil(BufReader *br, char *buf, int buf_size, char delim);
+size_t bufreader_readuntil(BufReader *br, char *buf, size_t buf_size,
+                           char delim);
 
 /**
  * @brief Read a string from a BufReader object
@@ -72,7 +74,7 @@ int bufreader_readuntil(BufReader *br, char *buf, int buf_size, char delim);
  *
  * @return the number of bytes read
  */
-int bufreader_readstr(BufReader *br, char *buf, int buf_size);
+size_t bufreader_readstr(BufReader *br, char *buf, size_t buf_size);
 
 /**
  * @brief Read a uint8_t from a BufReader object
@@ -82,6 +84,6 @@ int bufreader_readstr(BufReader *br, char *buf, int buf_size);
  *
  * @return the number of bytes read
  */
-int bufreader_readu8(BufReader *br, uint8_t *buf);
+size_t bufreader_readu8(BufReader *br, uint8_t *buf);
 
-#endif //BUFREADER_BUFREADER_H
+#endif // BUFREADER_BUFREADER_H
